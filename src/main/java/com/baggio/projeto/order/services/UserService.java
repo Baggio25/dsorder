@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.baggio.projeto.order.entities.User;
 import com.baggio.projeto.order.repositories.UserRepository;
+import com.baggio.projeto.order.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> userOptional = userRepository.findById(id); 
-		return userOptional.get();
+		return userOptional.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
